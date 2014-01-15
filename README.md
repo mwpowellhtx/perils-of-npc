@@ -24,4 +24,9 @@ mainly focusing on the Model portion, potentially extending into View and/or Vie
 concerns, of a sort if you are dealing with MVC. The concepts are similar enough to
 make it a worthwhile Model-centric topic.
 
+Most of the initial concepts will mostly likely be familiar to most of you who have
+been around the .NET framework awhile and done anything even remotely serious with
+a model framework. Some of the concepts later are new with .NET 4.5, which was part
+and partial my motivation for wanting to develop a topic in this area.
+
 Expect that this will be a work in progress and I will pick it up here...
