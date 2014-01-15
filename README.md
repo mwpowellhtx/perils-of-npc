@@ -12,10 +12,18 @@ in the same discussion, although that is something new int .NET 4 that I know of
 as concerns Model-aware systems that have been around awhile, since at least [.NET 3.5]
 (http://en.wikipedia.org/wiki/.NET_Framework).
 
+You could extend this discussion into areas such as [ObservableCollections]
+(http://msdn.microsoft.com/en-us/library/ms668604.aspx), which are powerful and useful in
+their own right, whenever notifying lists of things is required. However, for purposes of
+developing the topic, I will leave that issue aside as an exercise for the reader to
+explore on his or her own.
+
 I'll just mention that I have found INotifyPropertyChanged to be far more commonly
 recognized by NPC-aware components and component-vendors. You've probably used one
 or two of them, if you haven't already rolled your own: [Telerik](http://www.telerik.com/),
-[DevExpress](http://www.devexpress.com/), etc.
+[DevExpress](http://www.devexpress.com/), etc. For purposes of developing the topic I will
+also leave INotifyPropertyChanging as a follow on exercise for the reader to explore
+independently.
 
 I will also be edging into common currently used design patterns such as
 [MVC](http://en.wikipedia.org/wiki/Model_view_controller) (Model-View-Controller)
