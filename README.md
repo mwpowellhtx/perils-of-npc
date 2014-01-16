@@ -8,7 +8,7 @@ NPC primarily referring to [INotifyPropertyChanged]
 
 By extension I suppose you could include [INotifyPropertyChanging]
 (http://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanging.aspx)
-in the same discussion, although that is something new int .NET 4 that I know of, at least
+in the same discussion, although that is something new in .NET 4 that I know of, at least
 as concerns Model-aware systems that have been around awhile, since at least [.NET 3.5]
 (http://en.wikipedia.org/wiki/.NET_Framework).
 
