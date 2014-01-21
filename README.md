@@ -292,6 +292,13 @@ public static PropertyInfo GetProperty<TProperty>(this Expression<Func<TProperty
 }
 ```
 
+Minor technical note: you will notice this is an extension method. Which means
+you should locate it where ever you want to host your extension method(s). I
+tend to host these in a commonly shared assembly, not necessarily the model
+assembly, and definitely not a view model and/or view assembly. Otherwise you
+end up with the risk of circular references. Okay, enough about that technical
+note.
+
 The code here is nothing new nor is it that fancy. In fact it shows up on
 several blogs from time to time in one form or another, usually centered
 around the perennial question of what to do with NPC. With a little
