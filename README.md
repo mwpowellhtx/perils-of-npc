@@ -38,3 +38,21 @@ a model framework. Some of the concepts later are new with .NET 4.5, which was p
 and partial my motivation for wanting to develop a topic in this area.
 
 Expect that this will be a work in progress and I will pick it up here...
+
+# Opening Trick
+
+For my opening trick, I will start with a simple model, **Quantity**.
+
+```C#
+class Quantity
+{
+    public double Value { get; set; }
+
+    public string Unit { get; set; }
+}
+```
+
+That's it to start with. Obviously, the model is not communicating anything yet.
+It is a simple POCO, **Quantity** with a **Value** and a **Unit**. Pretty
+straightforward. You would not plug this into any views or view models and expect
+updates to occur auto-magically. But wait, it gets more interesting.
