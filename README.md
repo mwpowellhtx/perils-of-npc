@@ -191,7 +191,7 @@ Up until now the projects have targeted [.NET 4]
 (http://msdn.microsoft.com/en-us/library/w0x726c2%28v=vs.100%29.aspx).
 However, with [.NET 4.5]
 (http://msdn.microsoft.com/en-us/library/w0x726c2%28v=vs.110%29.aspx),
-Microsoft has introduced an Attribute called [CallingMemberNameAttribute]
+Microsoft has introduced an Attribute called [CallerMemberNameAttribute]
 (http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.callermembernameattribute%28v=vs.110%29.aspx),
 which you use to decorate a name parameter such as to our
 **OnPropertyChanged**. It might be helpful for things like logging helpers,
