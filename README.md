@@ -378,15 +378,24 @@ word can include supporting decorations, attributes, extension methods, and
 so on, that go along with it to establish a sufficiently rich domain
 experience.
 
-Anemic anti-patterns tend to show up through things like a view model
-getter/setter, or worse, entire swaths of model are duplicated through DTOs
-(Data Transfer Objects). If you're having to do much of that, it's a good
-indication that you need to turn something about your model, services, etc,
-inside out. Your fingers and those of your colleagues will thank you!
+Anemic anti-patterns tend to show up through things like view model getters
+and setters, or worse, entire swaths of model being duplicated through a [DTO]
+(http://en.wikipedia.org/wiki/Data_transfer_object) (Data Transfer Object)
+layer: to which my first response is usually, *"why doesn't the model know
+how to serialize itself?"*, which seems like an obvious first question to
+want to asking. We could also talk about [Service Locator]
+(http://en.wikipedia.org/wiki/Service_locator_pattern) as being another example
+of anti-pattern along similar lines; as contrasted with [Dependency Injection]
+(http://en.wikipedia.org/wiki/Dependency_injection), usually as expressed
+through constructor injected parameters, at minimum.
 
-Anyhow. That pet peave being addressed...
+This is very tangent to discussion, but worth mentioning if you are wanting to
+establish domain model sanity. If you're having contend with much of any of
+this, it's usually a good indication that you need to turn something about
+your model, services, etc, inside out. Your fingers and those of your
+colleagues will thank you! Anyhow, however, that pet peave being addressed...
 
-For purposes of this discussion, however, I will focus on a common practice:
+For purposes of this discussion, I will focus on a common practice:
 that of establishing some sort of base class through which to capture common
 model concerns. In this case, we're talking about making our NPC lives a little
 bit easier. There are frameworks that can also help with this: [Caliburn.Micro]
