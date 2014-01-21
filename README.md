@@ -354,7 +354,7 @@ update.
 
 Any time I talk about the [Domain Model]
 (http://en.wikipedia.org/wiki/Domain_model), keyword "the" used generously
-here, because "model" can mean a lot of things. Usually it is in reference to
+here, because "model" can mean a lot of things, usually it is in reference to
 a "domain", be it financial, scientific, manufacturing, whatever. Sometimes I
 talk about this in reference to the [Anemic Domain Model]
 (http://en.wikipedia.org/wiki/Anemic_domain_model), which is an animal all its
