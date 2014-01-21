@@ -356,7 +356,8 @@ Setting the stage for what's coming up, I need to cover the topic of domain
 model anemia. I am of the school of thought where I do tend to be extremely
 anemia-averse. I've experienced many projects in my career where this pattern
 has set in, and I've witnessed firsthand where concerns are duplicated and
-poorly maintained around the edges when core concerns could have been.
+poorly maintained around the edges when core concerns could have been arrested
+and dealt with in a single spot.
 
 Any time I talk about the [Domain Model]
 (http://en.wikipedia.org/wiki/Domain_model), keyword "the" used generously
