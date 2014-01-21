@@ -1,26 +1,7 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-
-namespace Perilous.Npc.Model
+﻿namespace Perilous.Npc
 {
-    public class Quantity : INotifyPropertyChanged
+    public class Quantity : ModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            if (PropertyChanged == null) return;
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void OnPropertyChanged<TProperty>(Expression<Func<TProperty>> property)
-        {
-            var propertyInfo = property.GetProperty();
-            OnPropertyChanged(propertyInfo.Name);
-        }
-
         private double _value = default(double);
 
         public double Value
@@ -54,6 +35,7 @@ namespace Perilous.Npc.Model
         }
 
         public Quantity()
+            : base()
         {
         }
     }

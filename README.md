@@ -349,3 +349,62 @@ agily to refactor demands, and so on.
 This is a start. Still things are somewhat disjunct in terms of repeating code
 patterns in the property setters. We will address this aspect in an upcoming
 update.
+
+## The Sane Domain Model
+
+Any time I talk about the [Domain Model]
+(http://en.wikipedia.org/wiki/Domain_model), keyword "the" used generously
+here, because "model" can mean a lot of things. Usually it is in reference to
+a "domain", be it financial, scientific, manufacturing, whatever. Sometimes I
+talk about this in reference to the [Anemic Domain Model]
+(http://en.wikipedia.org/wiki/Anemic_domain_model), which is an animal all its
+own.
+
+For purposes of this discussion, however, I will focus on a common practice:
+that of establishing some sort of base class through which to capture common
+model concerns. In this case, we're talking about making our NPC lives a little
+bit easier. There are frameworks that can also help with this: [Caliburn.Micro]
+(http://caliburnmicro.codeplex.com/) is a popular one in the XAML market place.
+The [DependencyObject]
+(http://msdn.microsoft.com/en-us/library/system.windows.dependencyobject.aspx)
+framework is also there for [Control]
+(http://msdn.microsoft.com/en-us/library/system.windows.controls.control.aspx)
+and [UserControl]
+(http://msdn.microsoft.com/en-us/library/system.windows.controls.usercontrol.aspx)
+oriented libraries. Both of these are examples and are outside the scope of
+this discussion.
+
+### The Model Base Class
+
+Okay, let's commence with the model base class. We'll call it "ModelBase", for
+lack of a better word. You could get fancy with it like receiving generically
+specific arguments, such as verifying that you are receiving a ModelBase
+derived class, which from time to time has its purpose. For purposes of
+discussion, we'll keep it simple and leave it really general purpose.
+
+```C#
+public interface IModel : INotifyPropertyChanged
+{
+}
+
+public abstract class ModelBase : IModel
+{
+    //TODO: Refactor the PropertyChanged methods,
+    // with appropriate access modifiers.
+
+    protected ModelBase()
+    {
+    }
+}
+```
+
+Essentially, this is it. We'll establish an interface, which extends the NPC
+and any other interfaces of interest. We will also refactor the PropertyChanged
+event and associated helpers, as well as adjust the access modifiers
+appropriately to accommodate the base class. Last but not least, our Quantity
+should derive from ModelBase in this case.
+
+At face value, this is an obvious first, next step. It's a good one, but we are
+still not through with our discussion. The next thing is to capture the concern
+of facilitating a property setter helper.
+

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using NUnit.Framework;
-using Perilous.Npc.Model;
 
 namespace Perilous.Npc
 {
