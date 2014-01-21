@@ -154,8 +154,8 @@ some typing prior to committing.
 ## Glaring Opportunities
 
 One glaring opportunity is that **PropertyChanged** is being raised every time
-a property value is **set**. Rather, we might want to verify whether the
-property value actually **changes**.
+a property value is *set*. Rather, we might want to verify whether the
+property value *actually changes*.
 
 In the case of the **Value** property, we do something like this:
 
