@@ -19,6 +19,7 @@ namespace Perilous.Npc.Model
             get { return _value; }
             set
             {
+                if (_value == value) return;
                 _value = value;
                 OnPropertyChanged("Value");
             }
@@ -31,6 +32,7 @@ namespace Perilous.Npc.Model
             get { return _unit; }
             set
             {
+                if (_unit.Equals(value)) return;
                 _unit = value;
                 OnPropertyChanged("Unit");
             }

@@ -137,7 +137,7 @@ Per se, it does not matter that we assert the actual changed value; rather, only
 that we know it changed. We can perform a similar verification for the **Unit**
 property.
 
-Note, this is testing one path through the PropertyChanging sequence. Depending on
+Note, this is testing one path through the **PropertyChanged** sequence. Depending on
 your unit testing concerns, you would want to consider the other paths, like **Unit**
 would not necessarily change because Value changed; use cases like that. We will not
 worry about that part unless we need to for purposes of discussion.
@@ -145,3 +145,36 @@ worry about that part unless we need to for purposes of discussion.
 In practice I would take a few minutes to abstract delegated actions, functions,
 helpers, and so on to reduce the typing overhead. But for purposes of this discussion,
 this is sufficient. I will go ahead and do this to save some typing prior to committing.
+
+## Glaring Opportunities
+
+One glaring opportunity is that **PropertyChanged** is being raised every time a property
+value is **set**. Rather, we might want to verify whether the property value actually
+**changes**.
+
+In the case of the **Value** property, we do something like this:
+
+```C#
+public double Value
+{
+    get { return _value; }
+    set
+    {
+        if (_value == value) return;
+        _value = value;
+        OnPropertyChanged("Value");
+    }
+}
+```
+
+Notice the simple check whether the value should change. The exact nature of the comparison
+may vary from use case to use case: if precision comparisons are necessary, whether strings
+or object instances are involved, and so on.
+
+This is a start, but as you can see, when moderately complex model objects are involved, this
+pattern starts to become quite cumbersome. But wait, that's not all. I will continue to flesh
+out the perils I've observed.
+
+Not only that but you must also hard-code the name of the property in the call to
+**OnPropertyChanged**. I'm not an especially big fan of the OnSuchAndSuch naming convention
+to begin with; RaiseSuchAndSuch seems more action-oriented, where as On is more like a predicate.

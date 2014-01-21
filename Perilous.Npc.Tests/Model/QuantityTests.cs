@@ -13,44 +13,79 @@ namespace Perilous.Npc
         [SetUp]
         public void SetUp()
         {
-            _quantity = new Quantity();
+            _quantity = new Quantity()
+            {
+                Value = 0d,
+                Unit = string.Empty,
+            };
         }
 
         [Test]
         public void Test_That_Value_PropertyChanged()
         {
-            var changed = false;
+            var value = 1d;
+            var changed = 0;
 
-            VerifyPropertyChanged(_quantity,
-                (s, e) =>
+            PropertyChangedEventHandler handler = (s, e) =>
+            {
+                Assert.That(s, Is.SameAs(_quantity));
+                Assert.That(e.PropertyName, Is.EqualTo("Value"));
+                ++changed;
+            };
+
+            VerifyPropertyChanged(
+                _quantity, handler,
+                q =>
                 {
-                    Assert.That(s, Is.SameAs(_quantity));
-                    Assert.That(e.PropertyName, Is.EqualTo("Value"));
-                    changed = true;
-                },
-                q => q.Value = 1d,
-                ref changed);
+                    var old = changed;
+                    q.Value = value;
+                    Assert.That(changed, Is.GreaterThan(old));
+                });
+
+            VerifyPropertyChanged(
+                _quantity, handler,
+                q =>
+                {
+                    var old = changed;
+                    q.Value = value;
+                    Assert.That(changed, Is.EqualTo(old));
+                });
         }
 
         [Test]
         public void Test_That_Unit_PropertyChanged()
         {
-            var changed = false;
+            var changed = 0;
 
-            VerifyPropertyChanged(_quantity,
-                (s, e) =>
+            PropertyChangedEventHandler handler = (s, e) =>
+            {
+                Assert.That(s, Is.SameAs(_quantity));
+                Assert.That(e.PropertyName, Is.EqualTo("Unit"));
+                ++changed;
+            };
+
+            VerifyPropertyChanged(
+                _quantity, handler,
+                q =>
                 {
-                    Assert.That(s, Is.SameAs(_quantity));
-                    Assert.That(e.PropertyName, Is.EqualTo("Unit"));
-                    changed = true;
-                },
-                q => q.Unit = "s",
-                ref changed);
+                    var old = changed;
+                    q.Unit = "s";
+                    Assert.That(changed, Is.GreaterThan(old));
+                });
+
+            VerifyPropertyChanged(
+                _quantity, handler,
+                q =>
+                {
+                    var old = changed;
+                    q.Unit = "s";
+                    Assert.That(changed, Is.EqualTo(old));
+                });
         }
 
         private static void VerifyPropertyChanged<T>(
             T obj, PropertyChangedEventHandler handler,
-            Action<T> action, ref bool changed)
+            Action<T> action)
             where T : INotifyPropertyChanged
         {
             try
@@ -58,8 +93,6 @@ namespace Perilous.Npc
                 obj.PropertyChanged += handler;
 
                 action(obj);
-
-                Assert.That(changed, Is.True);
             }
             finally
             {
