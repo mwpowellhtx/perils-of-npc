@@ -352,6 +352,12 @@ update.
 
 ## The Sane Domain Model
 
+Setting the stage for what's coming up, I need to cover the topic of domain
+model anemia. I am of the school of thought where I do tend to be extremely
+anemia-averse. I've experienced many projects in my career where this pattern
+has set in, and I've witnessed firsthand where concerns are duplicated and
+poorly maintained around the edges when core concerns could have been.
+
 Any time I talk about the [Domain Model]
 (http://en.wikipedia.org/wiki/Domain_model), keyword "the" used generously
 here, because "model" can mean a lot of things, usually it is in reference to
@@ -359,6 +365,24 @@ a "domain", be it financial, scientific, manufacturing, whatever. Sometimes I
 talk about this in reference to the [Anemic Domain Model]
 (http://en.wikipedia.org/wiki/Anemic_domain_model), which is an animal all its
 own.
+
+I usually also refer to "model" as being more than a "simple" [POCO]
+(http://en.wikipedia.org/wiki/Plain_Old_CLR_Object) (Plain Old CLR Object).
+To what degree, how much business sense needs to be expressed through the
+model, will vary from domain to domain, application to application, developer
+to developer. Be creative and think critically! I don't just mean the model
+classes, although it does start there. "Model" in the broader sense of the
+word can include supporting decorations, attributes, extension methods, and
+so on, that go along with it to establish a sufficiently rich domain
+experience.
+
+Anemic anti-patterns tend to show up through things like a view model
+getter/setter, or worse, entire swaths of model are duplicated through DTOs
+(Data Transfer Objects). If you're having to do much of that, it's a good
+indication that you need to turn something about your model, services, etc,
+inside out. Your fingers and those of your colleagues will thank you!
+
+Anyhow. That pet peave being addressed...
 
 For purposes of this discussion, however, I will focus on a common practice:
 that of establishing some sort of base class through which to capture common
