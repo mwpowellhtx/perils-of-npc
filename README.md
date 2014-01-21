@@ -275,7 +275,7 @@ There are a couple of immediate benefits exposing an expression tree along
 these lines. First, you gain compile-time verification. You cannot expose
 properties that aren't there to expose, by name or otherwise. You also have
 the flexibility to notify on any direct and indirect property that requires
-updating as a result of a having property changed.
+updating as a result of a property having changed.
 
 ```C#
 public static PropertyInfo GetProperty<TProperty>(this Expression<Func<TProperty>> property)
