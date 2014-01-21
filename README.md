@@ -39,7 +39,7 @@ and partial my motivation for wanting to develop a topic in this area.
 
 Expect that this will be a work in progress and I will pick it up here...
 
-# Opening Trick
+## Opening Trick
 
 For my opening trick, I will start with a simple model, **Quantity**.
 
@@ -56,3 +56,92 @@ That's it to start with. Obviously, the model is not communicating anything yet.
 It is a simple POCO, **Quantity** with a **Value** and a **Unit**. Pretty
 straightforward. You would not plug this into any views or view models and expect
 updates to occur auto-magically. But wait, it gets more interesting.
+
+## A Simple Notification
+
+We will add "simple" NPC to the equation now. For that, I typically introduce
+a backing field which the property uses as a reference.
+
+```C#
+class Quantity : INotifyPropertyChanged
+{
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private void OnPropertyChanged(string propertyName)
+    {
+        if (PropertyChanged == null) return;
+        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private double _value = default(double);
+
+    public double Value
+    {
+        get { return _value; }
+        set
+        {
+            _value = value;
+            OnPropertyChanged("Value");
+        }
+    }
+
+    private string _unit = string.Empty;
+
+    public string Unit
+    {
+        get { return _unit; }
+        set
+        {
+            _unit = value;
+            OnPropertyChanged("Unit");
+        }
+    }
+}
+```
+
+### Unit Testing
+
+Let's add some unit testing as well in order so that we can demonstrate some
+of these issues starting to work themselves out. Let's assume that the test
+fixture setup occurs and we have a Quantity instance available in the test case.
+
+```C#
+[Test]
+public void Test_That_Value_PropertyChanged()
+{
+    var changed = false;
+
+    PropertyChangedEventHandler handler = (s, e) =>
+    {
+        Assert.That(s, Is.SameAs(_quantity));
+        Assert.That(e.PropertyName, Is.EqualTo("Value"));
+        changed = true;
+    };
+
+    try
+    {
+        _quantity.PropertyChanged += handler;
+
+        _quantity.Value = 1d;
+
+        Assert.That(changed, Is.True);
+    }
+    finally
+    {
+        _quantity.PropertyChanged -= handler;
+    }
+}
+```
+
+Per se, it does not matter that we assert the actual changed value; rather, only
+that we know it changed. We can perform a similar verification for the **Unit**
+property.
+
+Note, this is testing one path through the PropertyChanging sequence. Depending on
+your unit testing concerns, you would want to consider the other paths, like **Unit**
+would not necessarily change because Value changed; use cases like that. We will not
+worry about that part unless we need to for purposes of discussion.
+
+In practice I would take a few minutes to abstract delegated actions, functions,
+helpers, and so on to reduce the typing overhead. But for purposes of this discussion,
+this is sufficient. I will go ahead and do this to save some typing prior to committing.
