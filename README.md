@@ -339,11 +339,12 @@ Basically you just feed the property a [Lambda Expression Tree]
 of delegates and anonymous functions, you are able to at once expose a
 property's name and a corresponding compile-time handshake.
 
-I will admit it is a time and space overhead for the Reflection and
-PropertyInfo, but it's worth it in my opinion if it gains you not having to
-chase hard-coded literal constants all over creation. You know immediately
-should a property change names, which happens from time to time in ever-growing
-code-bases, you can respond more agily to refactor demands, and so on.
+Although I haven't measured it myself (yet), I will admit there is some time
+and space overhead for the Reflection and PropertyInfo, but it's worth it in
+my opinion if it gains you not having to chase hard-coded literal constants
+all over creation. You know immediately should a property change names, which
+happens from time to time in ever-growing code-bases, you can respond more
+agily to refactor demands, and so on.
 
 This is a start. Still things are somewhat disjunct in terms of repeating code
 patterns in the property setters. We will address this aspect in an upcoming
