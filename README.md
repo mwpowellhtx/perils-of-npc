@@ -406,8 +406,8 @@ framework is also there for [Control]
 (http://msdn.microsoft.com/en-us/library/system.windows.controls.control.aspx)
 and [UserControl]
 (http://msdn.microsoft.com/en-us/library/system.windows.controls.usercontrol.aspx)
-oriented libraries. Both of these are examples and are outside the scope of
-this discussion.
+oriented libraries. Both of these are fine examples but are outside the scope
+of this discussion.
 
 ### The Model Base Class
 
