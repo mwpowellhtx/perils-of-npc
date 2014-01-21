@@ -262,3 +262,11 @@ a criticism such as this, I will suggest that with not much more effort, there
 are already mechanisms available that can facilitate solving this issue.
 
 I updated the unit tests accordingly with this step in the discussion.
+
+## Nailing Down the Property Name
+
+What I really want is a base-class, with a helper method, to help capture this
+and nearby concerns. However, before we get to that part, I want to address the
+property name issue.
+
+Will pick up with this exercise later...
