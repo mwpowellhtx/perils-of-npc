@@ -365,7 +365,8 @@ here, because "model" can mean a lot of things, usually it is in reference to
 a "domain", be it financial, scientific, manufacturing, whatever. Sometimes I
 talk about this in reference to the [Anemic Domain Model]
 (http://en.wikipedia.org/wiki/Anemic_domain_model), which is an animal all its
-own.
+own, as being the evil, anti-pattern of anti-patterns, antithesis of domain
+model sanity.
 
 I usually also refer to "model" as being more than a "simple" [POCO]
 (http://en.wikipedia.org/wiki/Plain_Old_CLR_Object) (Plain Old CLR Object).
