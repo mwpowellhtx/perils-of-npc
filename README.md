@@ -269,4 +269,75 @@ What I really want is a base-class, with a helper method, to help capture this
 and nearby concerns. However, before we get to that part, I want to address the
 property name issue.
 
-Will pick up with this exercise later...
+Enter: the Property [Expression Tree]
+(http://msdn.microsoft.com/en-us/library/bb397951.aspx).
+There are a couple of immediate benefits exposing an expression tree along
+these lines. First, you gain compile-time verification. You cannot expose
+properties that aren't there to expose, by name or otherwise. You also have
+the flexibility to notify on any direct and indirect property that requires
+updating as a result of a having property changed.
+
+```C#
+public static PropertyInfo GetProperty<TProperty>(this Expression<Func<TProperty>> property)
+{
+    var expr = property.Body as MemberExpression;
+    if (expr == null)
+        throw new InvalidOperationException("Expression is not a member access expression.");
+
+    var info = expr.Member as PropertyInfo;
+    if (info == null)
+        throw new InvalidOperationException("Member in expression is not a property.");
+
+    return info;
+}
+```
+
+The code here is nothing new nor is it that fancy. In fact it shows up on
+several blogs from time to time in one form or another, usually centered
+around the perennial question of what to do with NPC. With a little
+[Reflection](http://msdn.microsoft.com/en-us/library/f7ykdhsy.aspx)
+familiarity, you have the ability to expose an entire [PropertyInfo]
+(http://msdn.microsoft.com/en-us/library/system.reflection.propertyinfo.aspx),
+and thus it's name, through an Expression tree.
+
+The other half of the picture is what hooks to provide your model in order to
+wire up the Expression for its PropertyInfo.
+
+```C#
+private void OnPropertyChanged<TProperty>(Expression<Func<TProperty>> property)
+{
+    var propertyInfo = property.GetProperty();
+    OnPropertyChanged(propertyInfo.Name);
+}
+```
+
+And to use the method, adjust the properties accordingly.
+
+```C#
+public double Value
+{
+    get { return _value; }
+    set
+    {
+        if (_value == value) return;
+        _value = value;
+        OnPropertyChanged(() => Value);
+        OnPropertyChanged(() => DerivedValue);
+    }
+}
+```
+
+Basically you just feed the property a [Lambda Expression Tree]
+(http://msdn.microsoft.com/en-us/library/bb397687.aspx), and through the magic
+of delegates and anonymous functions, you are able to at once expose a
+property's name and a corresponding compile-time handshake.
+
+I will admit it is a time and space overhead for the Reflection and
+PropertyInfo, but it's worth it in my opinion if it gains you not having to
+chase hard-coded literal constants all over creation. You know immediately
+should a property change names, which happens from time to time in ever-growing
+code-bases, you can respond more agily to refactor demands, and so on.
+
+This is a start. Still things are somewhat disjunct in terms of repeating code
+patterns in the property setters. We will address this aspect in an upcoming
+update.

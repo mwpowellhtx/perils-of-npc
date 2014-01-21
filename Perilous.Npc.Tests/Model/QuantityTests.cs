@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using NUnit.Framework;
@@ -45,16 +44,19 @@ namespace Perilous.Npc
                 SetPropertyChanged(e.PropertyName);
             };
 
+            const string valueName = "Value";
+            const string derivedValueName = "DerivedValue";
+
             VerifyPropertyChanged(_quantity, handler, q => q.Value = value);
             VerifyPropertyChanged(_quantity, handler, q => q.Value = value);
 
             Assert.That(_changedProperties.Count, Is.EqualTo(2));
 
-            Assert.That(_changedProperties.ContainsKey("Value"), Is.True);
-            Assert.That(_changedProperties.ContainsKey("DerivedValue"), Is.True);
+            Assert.That(_changedProperties.ContainsKey(valueName), Is.True);
+            Assert.That(_changedProperties.ContainsKey(derivedValueName), Is.True);
 
-            Assert.That(_changedProperties["Value"], Is.EqualTo(1));
-            Assert.That(_changedProperties["DerivedValue"], Is.EqualTo(1));
+            Assert.That(_changedProperties[valueName], Is.EqualTo(1));
+            Assert.That(_changedProperties[derivedValueName], Is.EqualTo(1));
         }
 
         [Test]
@@ -66,14 +68,16 @@ namespace Perilous.Npc
                 SetPropertyChanged(e.PropertyName);
             };
 
+            const string unitName = "Unit";
+
             VerifyPropertyChanged(_quantity, handler, q => q.Unit = "s");
             VerifyPropertyChanged(_quantity, handler, q => q.Unit = "s");
 
             Assert.That(_changedProperties.Count, Is.EqualTo(1));
 
-            Assert.That(_changedProperties.ContainsKey("Unit"), Is.True);
+            Assert.That(_changedProperties.ContainsKey(unitName), Is.True);
 
-            Assert.That(_changedProperties["Unit"], Is.EqualTo(1));
+            Assert.That(_changedProperties[unitName], Is.EqualTo(1));
         }
 
         private static void VerifyPropertyChanged<T>(T obj,
