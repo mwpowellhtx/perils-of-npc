@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Perilous.Npc.Model
 {
@@ -6,7 +7,7 @@ namespace Perilous.Npc.Model
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (PropertyChanged == null) return;
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
@@ -21,8 +22,14 @@ namespace Perilous.Npc.Model
             {
                 if (_value == value) return;
                 _value = value;
-                OnPropertyChanged("Value");
+                OnPropertyChanged();
+                OnPropertyChanged("DerivedValue");
             }
+        }
+
+        public double DerivedValue
+        {
+            get { return Value*2.5d; }
         }
 
         private string _unit = string.Empty;
@@ -34,7 +41,7 @@ namespace Perilous.Npc.Model
             {
                 if (_unit.Equals(value)) return;
                 _unit = value;
-                OnPropertyChanged("Unit");
+                OnPropertyChanged();
             }
         }
 
