@@ -522,3 +522,8 @@ public string Unit
 Here we pass the *_unit* field in. We pass in the *value* or an empty string
 when null is set. Then we check for changing. Lastly, there is no after
 delegate action to take place here so we simply leave it out.
+
+I went ahead and added the *before* delegate action after all. This is helpful
+especially when the [INotifyPropertyChanging]
+(http://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanging.aspx)
+is implemented.
