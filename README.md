@@ -443,3 +443,82 @@ At face value, this is an obvious first, next step. It's a good one, but we are
 still not through with our discussion. The next thing is to capture the concern
 of facilitating a property setter helper.
 
+### The Property Setter Helper
+
+Okay, now that we have the plumbing more or less outlined, let's consider what
+a *Property Setter Helper* should be about.
+
+```C#
+protected virtual void SetProperty<TField, TProperty>(ref TField field, TField value,
+    Expression<Func<TProperty>> property, Func<TField, TField, bool> changing = null,
+    Action<TField, TField> after = null)
+{
+    if (changing != null && !changing(field, value)) return;
+    var old = field;
+    field = value;
+    OnPropertyChanged(property);
+    if (after != null) after(old, field);
+}
+```
+
+The helper method receives two generic parameters: **TField** and
+**TProperty**. TField corresponds to the field type. This can be anything,
+to be determined by the caller. Similarly, TProperty can also be anything,
+and could in fact be other than the field itself. This allows notification
+to occur completely decoupled and transparent from the field itself changing.
+
+Next, the *field* is passed in by "reference", meaning field can change. That's
+the one likely outcome of the method we want to have happen: change the field.
+It may not happend if changing is inappropriate, but it could: that's a strong
+desired outcome. Change to what: the *value* being passed in.
+
+Next we have our friend the Property Expression Tree *property*. We've
+discussed what that means already, no need to go over it again.
+
+Then we pass in an optional changing delegate function. Default means change
+occurs no matter what. Or we may pass in a function that tells us whether
+change is desired.
+
+Last but not least, from time to time an after delegate action is sometimes
+desired. This is other than the PropertyChanged event itself. This means an
+after action taken in direct response to the property changing. That could be
+a derived property needing to report, this type thing, along these lines.
+
+Sometimes I also pass in a before delegate action, depending on what I want to
+relay and when, but not always. It just depends on what value I need to add to
+the model framework.
+
+Okay, so now after that long-winded description, let's see it in action.
+
+```C#
+public double Value
+{
+    get { return _value; }
+    set
+    {
+        SetProperty(ref _value, value, () => Value,
+            (x, y) => y.CompareTo(x) != 0,
+            (x, y) => OnPropertyChanged(() => DerivedValue));
+    }
+}
+```
+
+So here we have a pretty straightforward usage complete with a changing and
+after delegate. We could also illustrate a slightly different usage using the
+*Unit* property as an example.
+
+```C#
+public string Unit
+{
+    get { return _unit; }
+    set
+    {
+        SetProperty(ref _unit, value ?? string.Empty, () => Unit,
+            (x, y) => !y.Equals(x));
+    }
+}
+```
+
+Here we pass the *_unit* field in. We pass in the *value* or an empty string
+when null is set. Then we check for changing. Lastly, there is no after
+delegate action to take place here so we simply leave it out.

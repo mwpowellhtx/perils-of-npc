@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Perilous.Npc
 {
@@ -27,6 +23,17 @@ namespace Perilous.Npc
         {
             var propertyInfo = property.GetProperty();
             OnPropertyChanged(propertyInfo.Name);
+        }
+
+        protected virtual void SetProperty<TField, TProperty>(ref TField field, TField value,
+            Expression<Func<TProperty>> property, Func<TField, TField, bool> changing,
+            Action<TField, TField> after = null)
+        {
+            if (changing != null && !changing(field, value)) return;
+            var old = field;
+            field = value;
+            OnPropertyChanged(property);
+            if (after != null) after(old, field);
         }
 
         protected ModelBase()

@@ -9,10 +9,9 @@
             get { return _value; }
             set
             {
-                if (_value == value) return;
-                _value = value;
-                OnPropertyChanged(() => Value);
-                OnPropertyChanged(() => DerivedValue);
+                SetProperty(ref _value, value, () => Value,
+                    (x, y) => y.CompareTo(x) != 0,
+                    (x, y) => OnPropertyChanged(() => DerivedValue));
             }
         }
 
@@ -28,9 +27,8 @@
             get { return _unit; }
             set
             {
-                if (_unit.Equals(value)) return;
-                _unit = value;
-                OnPropertyChanged(() => Unit);
+                SetProperty(ref _unit, value ?? string.Empty, () => Unit,
+                    (x, y) => !y.Equals(x));
             }
         }
 
