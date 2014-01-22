@@ -27,9 +27,10 @@ namespace Perilous.Npc
 
         protected virtual void SetProperty<TField, TProperty>(ref TField field, TField value,
             Expression<Func<TProperty>> property, Func<TField, TField, bool> changing,
-            Action<TField, TField> after = null)
+            Action<TField, TField> before = null, Action<TField, TField> after = null)
         {
             if (changing != null && !changing(field, value)) return;
+            if (before != null) before(field, value);
             var old = field;
             field = value;
             OnPropertyChanged(property);

@@ -11,6 +11,7 @@
             {
                 SetProperty(ref _value, value, () => Value,
                     (x, y) => y.CompareTo(x) != 0,
+                    null,
                     (x, y) => OnPropertyChanged(() => DerivedValue));
             }
         }
