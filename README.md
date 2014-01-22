@@ -1,7 +1,12 @@
 perils-of-npc
 =============
 
-The perils of NPC. What do I mean by that? I'm glad you asked.
+The perils of NPC. What do I mean by that? I'm glad you asked. Actually, I'll
+just preface by explaining: "perils" and "perilous" are catch words to get you
+hooked. There are perils, pitfalls, and other opportunities to really foul the
+thing up and get stranded pretty quickly, but there's no need to be that
+mystified by it when you follow a methodical approach to decomposing the
+problem.
 
 NPC primarily referring to [INotifyPropertyChanged]
 (http://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanged.aspx).
